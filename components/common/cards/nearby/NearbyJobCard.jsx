@@ -1,13 +1,47 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import {
+  View,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native'
+import { useRouter } from 'expo-router'
 
 import styles from './nearbyjobcard.style'
+import { COLORS } from '../../../../constants'
+import { checkImageURL } from '../../../../util'
 
-const NearbyJobCard = () => {
+const NearbyJobCard = ({ item, selectedJob, handleCardPress }) => {
+  const {} = item
   return (
-    <View>
-      <Text>NearbyJobCard</Text>
-    </View>
+    <TouchableOpacity
+      style={styles.container(selectedJob, item)}
+      onPress={() => handleCardPress(item)}
+    >
+      <TouchableOpacity style={styles.logoContainer(selectedJob, item)}>
+        <Image
+          source={{
+            uri: checkImageURL(item.employer_logo)
+              ? item.employer_logo
+              : 'https://img.freepik.com/free-vector/cartoon-character-cat-sticker_1308-66949.jpg?w=740&t=st=1681312635~exp=1681313235~hmac=35efd58dd350365a47e5a014cc07b92fd02085ad3345ad514fff6d414185a59b',
+          }}
+          resizeMode='contain'
+          style={styles.logoImage}
+        />
+      </TouchableOpacity>
+
+      <Text style={styles.companyName} numberOfLines={1}>
+        {item.employer_name}
+      </Text>
+
+      <View style={styles.infoContainer}>
+        <Text style={styles.jobName(selectedJob, item)} numberOfLines={1}>
+          {item.job_title}
+        </Text>
+        <Text style={styles.location}>{item.job_country}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
