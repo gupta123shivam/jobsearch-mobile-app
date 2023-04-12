@@ -21,7 +21,7 @@ const Popularjobs = () => {
     page: '1',
   })
 
-  const [selectedJob, setselectedJob] = useState(initialState)
+  const [selectedJob, setselectedJob] = useState()
 
   const handleCardPress = (item) => {}
 
@@ -47,6 +47,7 @@ const Popularjobs = () => {
                 item={item}
                 selectedJob={selectedJob}
                 onPress={(item) => handleCardPress(item)}
+                handleNavigate={() => router.push(`/job-details/${item.job_id}`)}
               />
             )}
             keyExtractor={(item) => item?.job_id}
